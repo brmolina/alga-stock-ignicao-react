@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
 import TestComponent from '../TestComponent'
+import ClassComponent from '../ClassComponent'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <TestComponent />
+        <ClassComponent name="Mundo"/>
         <a
           className="App-link"
           href="https://reactjs.org"
