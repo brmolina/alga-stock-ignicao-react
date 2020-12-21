@@ -18,18 +18,17 @@ function App() {
       <Header title="AlgaStock"/>
 
         <Container>
-          <Button
-            onClic={() => window.alert('Alert personalizado')}
-            appendIcon={<TestComponent/>}
-          >
-          Alert
-        </Button>
-        <Input
-          label = "Street"
-          placeholder = "e.g. 5th avenue"
-          value={street}
-          onChange={e => setStreet(e.target.value)}
-        />
+        {<ul>
+          {
+          ['Daniel', 'Willain', 'Thiago'].map((name, index) => 
+          {
+            return <li key={index}>
+              {name}
+            </li>
+          })
+        }
+        </ul>
+        }
         </Container>
         
       
