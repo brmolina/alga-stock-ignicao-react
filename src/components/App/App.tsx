@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../../shared/Button';
 import Container from '../../shared/Container';
+import Input from '../../shared/Input';
 import Header from '../Header';
 import './App.css';
 
@@ -9,6 +10,9 @@ function TestComponent(){
 }
 
 function App() {
+
+  const [street, setStreet] = useState('')
+
   return (
     <div className="App">
       <Header title="AlgaStock"/>
@@ -18,8 +22,14 @@ function App() {
             onClic={() => window.alert('Alert personalizado')}
             appendIcon={<TestComponent/>}
           >
-          Potato
+          Alert
         </Button>
+        <Input
+          label = "Street"
+          placeholder = "e.g. 5th avenue"
+          value={street}
+          onChange={e => setStreet(e.target.value)}
+        />
         </Container>
         
       
