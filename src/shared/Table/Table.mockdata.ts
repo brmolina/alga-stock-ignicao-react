@@ -25,7 +25,7 @@ const Products: Product[] = [
         name: 'Milk',
         price: 0.99,
         stock: 20,
-    }
+    },
 ]
 
 export default Products
