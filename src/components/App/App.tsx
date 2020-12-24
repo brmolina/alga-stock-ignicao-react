@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../../shared/Button';
 import Container from '../../shared/Container';
 import Form from '../../shared/Form';
 import Input from '../../shared/Input';
 import Table, { TableHeader } from '../../shared/Table';
-import Products from '../../shared/Table/Table.mockdata';
+import Products, { Product } from '../../shared/Table/Table.mockdata';
 import Header from '../Header';
-import ProductForm from '../Products/ProductForm';
+import ProductForm, { ProductCreator } from '../Products/ProductForm';
 import './App.css';
 
 const headers: TableHeader[] = [
@@ -18,7 +18,17 @@ const headers: TableHeader[] = [
 
 function App() {
 
-  
+  const [products, setProducts] = useState(Products)
+
+  const handleProductSubmit = (product: ProductCreator) => {
+    setProducts([
+      ...products,
+      {
+        id: products.length + 1,
+        ...product
+      }
+    ])
+  } 
 
   return (
     <div className="App">
@@ -27,9 +37,11 @@ function App() {
         <Container>
           <Table
             headers={headers}
-            data={Products}
+            data={products}
           />
-            <ProductForm/>
+            <ProductForm
+              onSubmit={handleProductSubmit}
+            />
         </Container>
     </div>
   )

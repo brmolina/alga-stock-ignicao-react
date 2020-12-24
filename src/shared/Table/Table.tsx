@@ -3,10 +3,6 @@ import organizeData from '../../utils/organizeDataForTable'
 
 import './Table.scss'
 
-
-
-
-
 export interface TableHeader {
   key: string
   value: string
