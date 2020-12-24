@@ -4,8 +4,8 @@ import './Button.css'
 
 declare interface ButtonProps {
     content?: string
-    onClic: () => void
-    appendIcon: JSX.Element
+    onClic?: () => void
+    appendIcon?: JSX.Element
 }
 
 const Button: React.FC <ButtonProps> = (props) => {
