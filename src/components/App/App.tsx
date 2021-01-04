@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2'
 import Button from '../../shared/Button';
 import Container from '../../shared/Container';
 import Form from '../../shared/Form';
@@ -43,6 +44,47 @@ function App() {
     
   }
 
+  const deleteProduct = (id: number)=> {
+    setProducts(products.filter(product => product.id !== id))
+  }
+
+  const handleProductDelete = (product: Product)=> {
+    Swal
+    .fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#09f',
+      cancelButtonColor: '#d33',
+      confirmButtonText: `Yes, delete ${product.name}!`
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        deleteProduct(product.id)
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
+  }
+
+  const handleProductDetail = (product: Product)=> {
+    
+      Swal.fire(
+      'Product Details',
+      `${product.name} costs $${product.price}. And we have ${product.stock} item(s) available in stock`,
+      'info'
+      )
+    
+  }
+
+  const handleProductEdit = (product: Product) => {
+    setUpdatindProduct(product)
+  }
+
   return (
     <div className="App">
       <Header title="AlgaStock"/>
@@ -52,9 +94,9 @@ function App() {
             headers={headers}
             data={products}
             enableActions={true}
-            onDelete={console.log}
-            //onDetail={console.log}
-            onEdit={console.log}
+            onDelete={handleProductDelete}
+            onDetail={handleProductDetail}
+            onEdit={handleProductEdit}
           />
             <ProductForm
               form={updatingProduct}

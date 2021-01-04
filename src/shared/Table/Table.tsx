@@ -70,11 +70,13 @@ const Table: React.FC<TableProps> = (props) => {
               props.enableActions
               && <td className="actions right">
                 {
-                  props.onEdit && 
-                    <Button onClick={() => props.onEdit && props.onEdit(row)}>
-                      Edit
-                    </Button>
-                }
+                    props.onEdit &&
+                      <Button
+                        onClick={() => props.onEdit && props.onEdit(row)}
+                      >
+                        Edit
+                      </Button>
+                  }
                 {
                   props.onDetail && 
                     <Button 
