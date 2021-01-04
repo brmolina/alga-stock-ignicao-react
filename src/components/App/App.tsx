@@ -21,7 +21,7 @@ function App() {
 
   const [products, setProducts] = useState(Products)
 
-  const [updatingProduct, setUpdatindProduct] = useState<Product | undefined>(products[0])
+  const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
 
   const handleProductSubmit = (product: ProductCreator) => {
     setProducts([
@@ -40,7 +40,7 @@ function App() {
       : product
     ))
 
-    setUpdatindProduct(undefined)
+    setUpdatingProduct(undefined)
     
   }
 
@@ -62,6 +62,7 @@ function App() {
     .then((result) => {
       if (result.isConfirmed) {
         deleteProduct(product.id)
+        setUpdatingProduct(undefined)
         Swal.fire(
           'Deleted!',
           'Your file has been deleted.',
@@ -82,7 +83,7 @@ function App() {
   }
 
   const handleProductEdit = (product: Product) => {
-    setUpdatindProduct(product)
+    setUpdatingProduct(product)
   }
 
   return (
