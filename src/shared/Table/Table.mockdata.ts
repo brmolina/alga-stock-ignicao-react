@@ -1,4 +1,4 @@
-import { table } from "console"
+//import { table } from "console"
 
 export interface Product {
     id: number

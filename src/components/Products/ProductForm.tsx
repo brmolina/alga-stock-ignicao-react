@@ -39,9 +39,9 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
         stock: '',
     }
 
-    function handleSubmitForm (data: any) {
+    /* function handleSubmitForm (data: any) {
         console.log(data)
-      }
+      } */
 
     const [form, setForm] = useState(initialFormState)
 
