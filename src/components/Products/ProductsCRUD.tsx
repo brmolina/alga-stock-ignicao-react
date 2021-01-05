@@ -8,7 +8,7 @@ import {
     deleteSingleProduct
 } from '../../services/Products.service'
 import {connect, useDispatch} from 'react-redux'
-import { insertNewProduct } from '../../redux/Products/Products.action'
+import { getProducts, insertNewProduct } from '../../redux/Products/Products.action'
 
 const headers: TableHeader[] = [
     { key: 'id', value: '#' },
@@ -28,8 +28,7 @@ const headers: TableHeader[] = [
     const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
   
      async function fetchData() {
-    /*   const _products = await getAllProducts()
-      setProducts(_products) */
+      dispatch(getProducts())
     }
   
     useEffect(()=> {
