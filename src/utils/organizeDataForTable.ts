@@ -1,12 +1,12 @@
 import { TableHeader } from "../shared/Table"
 
 type IndexedHeaders = {
-    [key: string]: TableHeader
-  }
-  
-  type OrganizedItem = {
-    [key: string]: any
-  }
+  [key: string]: TableHeader
+}
+
+type OrganizedItem = {
+  [key: string]: any
+}
 
 export default function organizeData (data: any[], headers: TableHeader[]):
   [OrganizedItem[], IndexedHeaders] {

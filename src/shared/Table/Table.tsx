@@ -1,32 +1,28 @@
 import React from 'react'
+import './Table.scss'
 import organizeData from '../../utils/organizeDataForTable'
 import Button from '../Button'
-
-import './Table.scss'
 
 export interface TableHeader {
   key: string
   value: string
   right?: boolean
 }
-
 declare interface TableProps {
   headers: TableHeader[]
   data: any[]
 
   enableActions?: boolean
-
-  onDelete?: (item:any) => void
-  onDetail?: (item:any) => void
-  onEdit?: (item:any) => void
+  
+  onDelete?: (item : any) => void
+  onDetail?: (item : any) => void
+  onEdit?: (item : any) => void
 }
 
-
-
-
-
 const Table: React.FC<TableProps> = (props) => {
+  
   const [organizedData, indexedHeaders] = organizeData(props.data, props.headers)
+
   return <table className="AppTable">
     <thead>
       <tr>
@@ -42,9 +38,9 @@ const Table: React.FC<TableProps> = (props) => {
         }
         {
           props.enableActions
-          && <th className="right">
-            Actions
-          </th>
+            && <th className="right">
+              Actions
+            </th>
         }
       </tr>
     </thead>
@@ -66,10 +62,11 @@ const Table: React.FC<TableProps> = (props) => {
                     : null
                 )
             }
+
             {
               props.enableActions
-              && <td className="actions right">
-                {
+                && <td className="actions right">
+                  {
                     props.onEdit &&
                       <Button
                         onClick={() => props.onEdit && props.onEdit(row.$original)}
@@ -77,29 +74,30 @@ const Table: React.FC<TableProps> = (props) => {
                         Edit
                       </Button>
                   }
-                {
-                  props.onDetail && 
-                    <Button 
-                      onClick={() => props.onDetail && props.onDetail(row.$original)}
-                    >
-                      Details
-                    </Button>
-                }
-                {
-                  props.onDelete && 
-                    <Button 
-                      onClick={() => props.onDelete && props.onDelete(row.$original)}
-                    >
-                      Delete
-                    </Button>
-                }
-              </td>
+                  {
+                    props.onDetail &&
+                      <Button
+                        onClick={() => props.onDetail && props.onDetail(row.$original)}
+                      >
+                        Detail
+                      </Button>
+                  }
+                  {
+                    props.onDelete &&
+                      <Button
+                        onClick={() => props.onDelete && props.onDelete(row.$original)}
+                      >
+                        Delete
+                      </Button>
+                  }
+                </td>
             }
           </tr>
         })
       }
     </tbody>
   </table>
-}
+  }
+
 
 export default Table
