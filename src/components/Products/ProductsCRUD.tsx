@@ -3,9 +3,9 @@ import Swal from 'sweetalert2'
 import Table, { TableHeader } from '../../shared/Table'
 import { Product } from '../../shared/Table/Table.mockdata'
 import ProductForm, { ProductCreator } from './ProductForm'
-import {connect, useDispatch} from 'react-redux'
+import { connect, useDispatch} from 'react-redux'
 import * as ProductsAction from '../../redux/Products/Products.action'
-import { RootState } from '../../redux'
+import { RootState, ThunkDispatch } from '../../redux'
 
 const headers: TableHeader[] = [
     { key: 'id', value: '#' },
@@ -20,54 +20,44 @@ const headers: TableHeader[] = [
   }
 
   const ProductsCRUD:  React.FC<ProductsCRUDProps>  = ( props )=> {
-    const dispatch = useDispatch()
-//11:37    const [products, setProducts] = useState<Product[]>([])
-    const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
-  
-     async function fetchData() {
-       try {
+    const dispatch: ThunkDispatch= useDispatch()
+    
+    const showErrorAlert = 
+      (err: Error) => Swal.fire('Ooops!', err.message, 'error')
 
-         await dispatch(ProductsAction.getProducts())
-       } catch (err) {
-          Swal.fire('Ooops!', err.message, 'error')
-       }
-      
-    }
+    const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
   
     useEffect(()=> {
       fetchData()
     }, [])
+    
+     async function fetchData() {
+       dispatch(ProductsAction.getProducts())
+       .catch(showErrorAlert)
+       }
   
     const handleProductSubmit = async (product: ProductCreator) => {
-      try {
-        dispatch(ProductsAction.insertNewProduct(product))
-      } catch (err) {
-        Swal.fire('woops', err.message, 'error')
-      }
+      dispatch(ProductsAction.insertNewProduct(product))
+      .catch(showErrorAlert)
     } 
   
     const handleProductUpdate = async (newProduct: Product) => {
-      try {
-          await dispatch(ProductsAction.updateProduct(newProduct))
-          setUpdatingProduct(undefined)
-      } catch (err) {
-        Swal.fire('Woops', err.message, 'error')
-      }
-      
+      dispatch(ProductsAction.updateProduct(newProduct))
+      .then(()=> setUpdatingProduct(undefined))
+      .catch(showErrorAlert)
+          
     }
   
     const deleteProduct = async (id: string)=> {
-      try {
-        await dispatch(ProductsAction.deleteProduct(id))
+      dispatch(ProductsAction.deleteProduct(id))
+      .then(()=>{
         Swal.fire(
           'Deleted!',
           'Your file has been deleted.',
           'success'
         )
-        setUpdatingProduct(undefined)
-      } catch (err) {
-        Swal.fire('Woops', err.message, 'error')
-      }
+      })
+      .catch(showErrorAlert)
     }
   
     const handleProductDelete = (product: Product)=> {
@@ -81,12 +71,9 @@ const headers: TableHeader[] = [
         cancelButtonColor: '#d33',
         confirmButtonText: `Yes, delete ${product.name}!`
       })
-      .then((result) => {
-        if (result.isConfirmed) {
-          deleteProduct(product._id)
-        }
-      })
+      .then(({value}) => value && deleteProduct(product._id))
     }
+    
   
     const handleProductDetail = (product: Product)=> {
       
@@ -95,12 +82,8 @@ const headers: TableHeader[] = [
         `${product.name} costs $${product.price}. And we have ${product.stock} item(s) available in stock`,
         'info'
         )
-      
     }
-  
-    const handleProductEdit = (product: Product) => {
-      setUpdatingProduct(product)
-    }
+
       return <>
       <Table
             headers={headers}
@@ -108,7 +91,7 @@ const headers: TableHeader[] = [
             enableActions={true}
             onDelete={handleProductDelete}
             onDetail={handleProductDetail}
-            onEdit={handleProductEdit}
+            onEdit={setUpdatingProduct}
           />
             <ProductForm
               form={updatingProduct}
@@ -121,5 +104,5 @@ const headers: TableHeader[] = [
 const mapStateToProps = (state: RootState ) => ({
   products: state.products
 })
-
+ 
 export default connect(mapStateToProps)(ProductsCRUD)
