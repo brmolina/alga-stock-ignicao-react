@@ -3,12 +3,9 @@ import Swal from 'sweetalert2'
 import Table, { TableHeader } from '../../shared/Table'
 import { Product } from '../../shared/Table/Table.mockdata'
 import ProductForm, { ProductCreator } from './ProductForm'
-import { 
-    updateSingleProduct,
-    deleteSingleProduct
-} from '../../services/Products.service'
 import {connect, useDispatch} from 'react-redux'
-import { getProducts, insertNewProduct } from '../../redux/Products/Products.action'
+import * as ProductsAction from '../../redux/Products/Products.action'
+import { RootState } from '../../redux'
 
 const headers: TableHeader[] = [
     { key: 'id', value: '#' },
@@ -30,7 +27,7 @@ const headers: TableHeader[] = [
      async function fetchData() {
        try {
 
-         await dispatch(getProducts())
+         await dispatch(ProductsAction.getProducts())
        } catch (err) {
           Swal.fire('Ooops!', err.message, 'error')
        }
@@ -43,9 +40,7 @@ const headers: TableHeader[] = [
   
     const handleProductSubmit = async (product: ProductCreator) => {
       try {
-        dispatch(insertNewProduct(product))
-  //      await createSingleProduct(product)
-        fetchData()
+        dispatch(ProductsAction.insertNewProduct(product))
       } catch (err) {
         Swal.fire('woops', err.message, 'error')
       }
@@ -53,9 +48,8 @@ const headers: TableHeader[] = [
   
     const handleProductUpdate = async (newProduct: Product) => {
       try {
-          await updateSingleProduct(newProduct)
+          await dispatch(ProductsAction.updateProduct(newProduct))
           setUpdatingProduct(undefined)
-          fetchData()
       } catch (err) {
         Swal.fire('Woops', err.message, 'error')
       }
@@ -64,14 +58,13 @@ const headers: TableHeader[] = [
   
     const deleteProduct = async (id: string)=> {
       try {
-        await deleteSingleProduct(id)
+        await dispatch(ProductsAction.deleteProduct(id))
         Swal.fire(
           'Deleted!',
           'Your file has been deleted.',
           'success'
         )
         setUpdatingProduct(undefined)
-        fetchData()
       } catch (err) {
         Swal.fire('Woops', err.message, 'error')
       }
@@ -125,7 +118,7 @@ const headers: TableHeader[] = [
       </>
   }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: RootState ) => ({
   products: state.products
 })
 
