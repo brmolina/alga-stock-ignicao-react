@@ -28,7 +28,13 @@ const headers: TableHeader[] = [
     const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
   
      async function fetchData() {
-      dispatch(getProducts())
+       try {
+
+         await dispatch(getProducts())
+       } catch (err) {
+          Swal.fire('Ooops!', err.message, 'error')
+       }
+      
     }
   
     useEffect(()=> {
@@ -51,7 +57,7 @@ const headers: TableHeader[] = [
           setUpdatingProduct(undefined)
           fetchData()
       } catch (err) {
-        Swal.fire('Woops', err.messaage, 'error')
+        Swal.fire('Woops', err.message, 'error')
       }
       
     }
@@ -67,7 +73,7 @@ const headers: TableHeader[] = [
         setUpdatingProduct(undefined)
         fetchData()
       } catch (err) {
-        Swal.fire('Woops', err.messaage, 'error')
+        Swal.fire('Woops', err.message, 'error')
       }
     }
   
