@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = (props)=>{
         <h1>{props.title}</h1>
         <span>
             {
-               props.firstProduct.name
+               props.firstProduct?.name
             }
         </span>
     </header>
