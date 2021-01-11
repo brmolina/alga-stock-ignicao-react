@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { Action } from "..";
 import { User } from "../../services/Authentication.service";
 
