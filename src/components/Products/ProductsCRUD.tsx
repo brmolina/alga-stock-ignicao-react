@@ -29,6 +29,7 @@ const headers: TableHeader[] = [
   
     useEffect(()=> {
       fetchData()
+      // eslint-disable-next-line
     }, [])
     
      async function fetchData() {
