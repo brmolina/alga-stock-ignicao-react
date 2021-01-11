@@ -1,5 +1,5 @@
+
 /* eslint-disable import/no-anonymous-default-export */
-import Swal from "sweetalert2";
 import { Action } from "..";
 import { User } from "../../services/Authentication.service";
 
@@ -15,13 +15,7 @@ export default function (
     switch (action.type) {
 
         case 'AUTHENTICATION_LOGIN':
-            return Swal
-            .fire({
-              title: 'Success',
-              icon: 'success',
-              timer: 2000,
-            })
-            , { profile: action.payload }
+            return { profile: action.payload }
 
         case 'AUTHENTICATION_LOGOUT':
             return {  }

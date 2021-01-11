@@ -21,6 +21,12 @@ const LoginForm = ()=> {
     const handleLogin = async () => {
         try {
             await dispatch(login(form))
+            Swal
+            .fire({
+              title: 'Success',
+              icon: 'success',
+              timer: 2000,
+            })
             history.push('/')
         } catch (err) {
             Swal.fire(
