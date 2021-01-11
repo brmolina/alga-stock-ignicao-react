@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import  { Product } from "../../shared/Table/Table.mockdata"
 import { Action } from ".."
 
